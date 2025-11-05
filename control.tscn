@@ -113,6 +113,7 @@ theme_override_font_sizes/font_size = 24
 text = "建筑处理进度：0/0"
 
 [node name="[AI]" type="Label" parent="."]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 256.0
 offset_right = 210.0
