@@ -1,0 +1,178 @@
+[gd_scene load_steps=4 format=3 uid="uid://chc8e210olvek"]
+
+[ext_resource type="Script" uid="uid://dc8bskmln0arx" path="res://主要的.gd" id="2_62e2m"]
+[ext_resource type="FontFile" uid="uid://bs43vpfrrvjmc" path="res://字体.tres" id="2_qtu10"]
+[ext_resource type="Texture2D" uid="uid://4in57qetxwbt" path="res://按钮.png" id="4_ee4bf"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_62e2m")
+
+[node name="标题" type="Label" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 40
+text = "ra2引擎ini转yr引擎ini"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="[General]" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 76.0
+offset_right = 186.0
+offset_bottom = 104.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 24
+text = "[General]处理进度：0/0"
+
+[node name="[Sides]" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 106.0
+offset_right = 169.0
+offset_bottom = 134.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 24
+text = "[Sides]处理进度：0/0"
+
+[node name="[InfantryTypes]" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 136.0
+offset_right = 226.0
+offset_bottom = 164.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 24
+text = "[InfantryTypes]处理进度：0/0"
+
+[node name="步兵" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 166.0
+offset_right = 154.0
+offset_bottom = 194.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 24
+text = "步兵处理进度：0/0"
+
+[node name="[BuildingTypes]" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 196.0
+offset_right = 229.0
+offset_bottom = 224.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 24
+text = "[BuildingTypes]处理进度：0/0"
+
+[node name="建筑" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 226.0
+offset_right = 154.0
+offset_bottom = 254.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 24
+text = "建筑处理进度：0/0"
+
+[node name="[AI]" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 256.0
+offset_right = 210.0
+offset_bottom = 289.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 24
+text = "[AI]处理进度：0/0"
+
+[node name="处理完成" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -44.0
+offset_right = 115.0
+offset_bottom = -16.0
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 24
+text = "处理完成：no"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="退出按钮" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -41.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("4_ee4bf")
+
+[node name="标题" type="Label" parent="退出按钮"]
+layout_mode = 0
+offset_right = 126.0
+offset_bottom = 25.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 16
+text = "退出"
+horizontal_alignment = 1
+vertical_alignment = 1
