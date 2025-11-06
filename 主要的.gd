@@ -80,6 +80,7 @@ func 开始修改 () :
 #复制文件
 	for 文件名 in 复制的文件列表 :
 		var 新文件名 = 文件名.substr (0 , 文件名.find (".") ) + "md" + 文件名.substr (文件名.find (".") )
+		if 文件名.substr (文件名.find (".") ) == ".mix" : 新文件名 = 文件名.substr (0 , 文件名.find (".") - 2 ) + "md" + 文件名.substr (文件名.find (".") - 2 )
 		if not DirAccess.dir_exists_absolute(输出路径):
 			DirAccess.make_dir_recursive_absolute(输出路径)
 		if FileAccess.file_exists (mod路径 + "\\" + 文件名) :
