@@ -1,15 +1,20 @@
 extends Node
 
-var mod路径 = OS.get_executable_path ().get_base_dir () + "\\mod路径"
-var 输出路径 = OS.get_executable_path ().get_base_dir () + "\\输出路径"
-var 复制的文件列表 = ["ai.ini" , "art.ini" , "rules.ini" , "credits.txt"]
-
 var rulesmd
 var rulesmd_yr
-var 一次处理多少个 = 1
 var 进度条 = []
 var 结束 = false
-var 是否自动退出 = false
+
+var 配置data : Dictionary = {
+	"mod路径" : OS.get_executable_path ().get_base_dir () + "\\mod路径" ,
+	"输出路径" : OS.get_executable_path ().get_base_dir () + "\\输出路径" ,
+	"复制的文件列表" : ["*.ini" , "*.txt"] ,
+	"一次处理量" : 1 ,
+	"是否自动退出" : false ,
+
+	"进度条" : 1 ,
+	"结束" : false
+}
 
 func _ready () -> void :
 	var image = Image.create(640, 480, false, Image.FORMAT_RGBA8)
@@ -29,26 +34,25 @@ func _ready () -> void :
 	退出按钮.mouse_exited.connect(func(): 退出按钮.texture = load("res://按钮.png") )
 
 	var 配置文件 = 读取ini ("配置文件.ini" , true)
-	print(配置文件)
 
 	for temp_string1 in 配置文件 :
 		var temp_string1_键 = temp_string1.substr (0 , temp_string1.find ("=") )
 		var temp_string1_值 = temp_string1.substr (temp_string1.find ("=") + 1)
 		match temp_string1_键 :
 			"mod路径" :
-				mod路径 = temp_string1_值.rstrip("\\/")
+				配置data["mod路径"] = temp_string1_值.rstrip("\\/")
 			"输出路径" :
-				输出路径 = temp_string1_值
+				配置data["输出路径"] = temp_string1_值
 			"复制的文件列表" :
-				复制的文件列表 = temp_string1_值.split ( "," , false )
+				配置data["复制的文件列表"] = temp_string1_值.split ( "," , false )
 			"一次处理量" :
-				一次处理多少个 = int (temp_string1_值)
+				配置data["一次处理量"] = int (temp_string1_值)
 			"是否自动退出" :
 				temp_string1_值 = 文本变为小写字母 (temp_string1_值)
 				if temp_string1_值 == "yes" || temp_string1_值 == "true" :
-					是否自动退出 = true
+					配置data["是否自动退出"] = true
 				elif temp_string1_值 == "no" || temp_string1_值 == "false" :
-					是否自动退出 = false
+					配置data["是否自动退出"] = false
 
 	for i in 7 :
 		进度条.append (Vector2i (0 , 0) )
@@ -78,16 +82,35 @@ func 开始修改 () :
 	await get_tree().process_frame
 
 #复制文件
-	for 文件名 in 复制的文件列表 :
-		var 新文件名 = 文件名.substr (0 , 文件名.find (".") ) + "md" + 文件名.substr (文件名.find (".") )
-		if 文件名.substr (文件名.find (".") ) == ".mix" : 新文件名 = 文件名.substr (0 , 文件名.find (".") - 2 ) + "md" + 文件名.substr (文件名.find (".") - 2 )
-		if not DirAccess.dir_exists_absolute(输出路径):
-			DirAccess.make_dir_recursive_absolute(输出路径)
-		if FileAccess.file_exists (mod路径 + "\\" + 文件名) :
-			DirAccess.copy_absolute (mod路径 + "\\" + 文件名 , 输出路径 + "\\" + 新文件名)
+	for 文件名 in 配置data["复制的文件列表"] :
+		if 文件名.substr (0 , 2) == "*." :
+			var files = []
+			var dir = DirAccess.open(配置data["mod路径"])
+			if dir:
+				dir.list_dir_begin()
+				var file_name = dir.get_next()
+				while file_name != "":
+					if not dir.current_is_dir():
+						if 文件名.get_extension() == file_name.get_extension() && file_name.get_basename().substr (file_name.get_basename().length() - 2) != "md" :
+							files.append(file_name)
+					file_name = dir.get_next()
+
+			for 旧文件名 in files :
+				var 新文件名 = 旧文件名.substr (0 , 旧文件名.find (".") ) + "md" + 旧文件名.substr (旧文件名.find (".") )
+				if not DirAccess.dir_exists_absolute(配置data["输出路径"]):
+					DirAccess.make_dir_recursive_absolute(配置data["输出路径"])
+				if FileAccess.file_exists (配置data["mod路径"] + "\\" + 旧文件名) :
+					DirAccess.copy_absolute (配置data["mod路径"] + "\\" + 旧文件名 , 配置data["输出路径"] + "\\" + 新文件名)
+		else :
+			var 新文件名 = 文件名.substr (0 , 文件名.find (".") ) + "md" + 文件名.substr (文件名.find (".") )
+			if 文件名.substr (文件名.find (".") ) == ".mix" : 新文件名 = 文件名.substr (0 , 文件名.find (".") - 2 ) + "md" + 文件名.substr (文件名.find (".") - 2 )
+			if not DirAccess.dir_exists_absolute(配置data["输出路径"]):
+				DirAccess.make_dir_recursive_absolute(配置data["输出路径"])
+			if FileAccess.file_exists (配置data["mod路径"] + "\\" + 文件名) :
+				DirAccess.copy_absolute (配置data["mod路径"] + "\\" + 文件名 , 配置data["输出路径"] + "\\" + 新文件名)
 
 #改rules
-	rulesmd = 读取ini (mod路径 + "\\rules.ini")
+	rulesmd = 读取ini (配置data["mod路径"] + "\\rules.ini")
 	rulesmd_yr = 读取ini ("res://rulesmd-yr.ini")
 
 	处理__General_小节 ()
@@ -101,13 +124,13 @@ func 开始修改 () :
 func 保存文件 () :
 	rulesmd = 合并ini (rulesmd)
 	rulesmd = rulesmd.filter (func (element) : return element != "")
-	DirAccess.open(输出路径).remove("rulesmd.ini")
-	var file = FileAccess.open(输出路径 + "\\rulesmd.ini", FileAccess.WRITE)
+	DirAccess.open(配置data["输出路径"]).remove("rulesmd.ini")
+	var file = FileAccess.open(配置data["输出路径"] + "\\rulesmd.ini", FileAccess.WRITE)
 	for 当前行 in rulesmd :
 		file.store_string(当前行 + "\r\n")
 	file.close()
 
-	if 是否自动退出 : get_tree().quit()
+	if 配置data["是否自动退出"] : get_tree().quit()
 
 func 读取ini (Path_ini , 是根目录 = false) :
 	if 是根目录 : Path_ini = OS.get_executable_path ().get_base_dir () + "\\" + Path_ini
@@ -122,7 +145,7 @@ func 读取ini (Path_ini , 是根目录 = false) :
 	临时_ini_主要的 = 临时_ini_主要的.map(func(行) :
 		if 行.find (";") != -1 :
 			行 = 行.substr (0 , 行.find (";"))
-		if 行.substr (0 , 行.find ("=") ) != "Name" :
+		if 行.substr (0 , 行.find ("=") ) != "Name" && 行.substr (0 , 行.find ("=") ) != "mod路径" && 行.substr (0 , 行.find ("=") ) != "输出路径" :
 			行 = 行.replace (" " , "")
 		return 行 )
 	#删制空行
@@ -147,26 +170,28 @@ func 合并ini (临时_ini_主要的) :
 			小节内容_1 += 获取小节 (临时_ini_主要的 , 小节)
 			临时_ini_主要的 = 删除小节 (临时_ini_主要的 , 小节)
 
-		var result_dict = {}
-		for line in 小节内容_1:
-			# 跳过空行
-			if line.strip_edges().is_empty():
-				continue
-				
-			# 分割键值对
-			if "=" in line:
-				var parts = line.split("=", false, 1)
-				var key = parts[0].strip_edges()
-				var value = parts[1].strip_edges() if parts.size() > 1 else ""
-				
-				# 相同的键，后面的值覆盖前面的
-				result_dict[key] = value
-		
-		# 转换回数组格式
-		var result_array = []
-		for key in result_dict:
-			result_array.append("%s=%s" % [key, result_dict[key]])
-		临时_ini_主要的_1 += result_array
+		临时_ini_主要的_1 += 小节内容_1
+
+		#var result_dict = {}
+		#for line in 小节内容_1:
+			## 跳过空行
+			#if line.strip_edges().is_empty():
+				#continue
+				#
+			## 分割键值对
+			#if "=" in line:
+				#var parts = line.split("=", false, 1)
+				#var key = parts[0].strip_edges()
+				#var value = parts[1].strip_edges() if parts.size() > 1 else ""
+				#
+				## 相同的键，后面的值覆盖前面的
+				#result_dict[key] = value
+		#
+		## 转换回数组格式
+		#var result_array = []
+		#for key in result_dict:
+			#result_array.append("%s=%s" % [key, result_dict[key]])
+		#临时_ini_主要的_1 += result_array
 
 	临时_ini_主要的_1 = Array (临时_ini_主要的_1)
 
@@ -215,13 +240,13 @@ func 获取小节 (ini文件 , 小节名称) :
 func 处理__General_小节 () :
 	进度条[0] = Vector2i (0 , 3)
 	rulesmd = 合并ini (rulesmd)
-	var 旧的小节 = 获取小节 (rulesmd , "General")
+	var ra2小节 = 获取小节 (rulesmd , "General")
 
 	rulesmd = 删除小节 (rulesmd , "General")
 
 	进度条[0] = Vector2i (1 , 3)
 
-	var 新的小节 = 获取小节 (rulesmd_yr , "General")
+	var yr小节 = 获取小节 (rulesmd_yr , "General")
 
 	var temp_ini = []
 	temp_ini.append ("[CombatDamage]")
@@ -234,9 +259,58 @@ func 处理__General_小节 () :
 	rulesmd += temp_ini
 	进度条[0] = Vector2i (2 , 3)
 
+	var data_General : Dictionary = {
+		"PrerequisitePower" : null ,
+		"PrerequisiteFactory" : null ,
+		"PrerequisiteBarracks" : null ,
+		"PrerequisiteRadar" : null ,
+		"PrerequisiteTech" : null ,
+		"PrerequisiteProc" : null ,
+
+		"BaseUnit" : null ,
+		"Shipyard" : null ,
+	}
+
+	for temp_string1 in ra2小节 :
+		var temp_string1_键 = temp_string1.substr (0 , temp_string1.find ("=") )
+		var temp_string1_值 = temp_string1.substr (temp_string1.find ("=") + 1)
+		match temp_string1_键 :
+			"PrerequisitePower" :
+				data_General["PrerequisitePower"] = temp_string1_值
+			"PrerequisiteFactory" :
+				data_General["PrerequisiteFactory"] = temp_string1_值
+			"PrerequisiteBarracks" :
+				data_General["PrerequisiteBarracks"] = temp_string1_值
+			"PrerequisiteRadar" :
+				data_General["PrerequisiteRadar"] = temp_string1_值
+			"PrerequisiteTech" :
+				data_General["PrerequisiteTech"] = temp_string1_值
+			"PrerequisiteProc" :
+				data_General["PrerequisiteProc"] = temp_string1_值
+
+			"BaseUnit" :
+				data_General["BaseUnit"] = ""
+				temp_string1_值 = Array (temp_string1_值.split ( "," , false ) )
+				var aaa = [temp_string1_值[0],temp_string1_值[0],temp_string1_值[0]]
+				for i in temp_string1_值.size() :
+					aaa[i] = temp_string1_值[i]
+				for bbb in aaa :
+					data_General["BaseUnit"] += (bbb + ",")
+				data_General["BaseUnit"] = data_General["BaseUnit"].substr (0 , data_General["BaseUnit"].length () - 1)
+			"Shipyard" :
+				data_General["Shipyard"] = temp_string1_值
+
 	temp_ini = ["[General]"]
-	temp_ini += 新的小节
-	temp_ini += 旧的小节
+	temp_ini += yr小节
+	temp_ini.append ("PrerequisitePower=" + data_General["PrerequisitePower"])
+	temp_ini.append ("PrerequisiteFactory=" + data_General["PrerequisiteFactory"])
+	temp_ini.append ("PrerequisiteBarracks=" + data_General["PrerequisiteBarracks"])
+	temp_ini.append ("PrerequisiteRadar=" + data_General["PrerequisiteRadar"])
+	temp_ini.append ("PrerequisiteTech=" + data_General["PrerequisiteTech"])
+	temp_ini.append ("PrerequisiteProc=" + data_General["PrerequisiteProc"])
+
+	temp_ini.append ("BaseUnit=" + data_General["BaseUnit"])
+	temp_ini.append ("Shipyard=" + data_General["Shipyard"])
 	rulesmd += temp_ini
 	rulesmd = 合并ini (rulesmd)
 
@@ -308,7 +382,7 @@ func 处理__InfantryTypes_小节__步兵_小节 (盟军所属 , 苏军所属) :
 				temp_ini.append("EliteOccupyWeapon=SovietOccupyW")
 				rulesmd += temp_ini
 
-		if 进度条[3].x % 一次处理多少个 == 0 :
+		if 进度条[3].x % 配置data["一次处理量"] == 0 :
 			await get_tree().process_frame
 		进度条[3] = Vector2i (进度条[3].x + 1 , 步兵注册表.size () )
 
@@ -361,7 +435,7 @@ func 处理__BuildingTypes_小节__建筑_小节 () :
 			temp_ini.append ("InfantryAbsorb=yes")
 			rulesmd += temp_ini
 
-		if 进度条[5].x % 一次处理多少个 == 0 :
+		if 进度条[5].x % 配置data["一次处理量"] == 0 :
 			await get_tree().process_frame
 		进度条[5] = Vector2i (进度条[5].x + 1 , 建筑注册表.size () )
 
