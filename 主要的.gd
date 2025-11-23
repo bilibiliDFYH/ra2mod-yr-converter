@@ -52,7 +52,6 @@ func _ready () -> void :
 					temp_string1_值 = temp_string1_值.substr (temp_string1_值.find (">") + 1)
 			"一次处理量" :
 				配置data["一次处理量"] = int (temp_string1_值)
-				print(配置data["一次处理量"])
 			"是否自动退出" :
 				temp_string1_值 = 文本变为小写字母 (temp_string1_值)
 				if temp_string1_值 == "yes" || temp_string1_值 == "true" :

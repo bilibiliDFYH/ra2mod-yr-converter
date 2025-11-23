@@ -172,6 +172,7 @@ GitHub：
 项目仓库："
 
 [node name="LinkButton4" type="LinkButton" parent="作者"]
+layout_mode = 0
 offset_left = 80.0
 offset_top = 103.0
 offset_right = 454.0
@@ -187,6 +188,7 @@ text = "https://github.com/bilibiliDFYH/ra2mod-yr-converter"
 uri = "https://github.com/bilibiliDFYH/ra2mod-yr-converter"
 
 [node name="LinkButton3" type="LinkButton" parent="作者"]
+layout_mode = 0
 offset_left = 66.0
 offset_top = 77.0
 offset_right = 382.0
@@ -202,6 +204,7 @@ text = "https://github.com/bilibiliDFYH"
 uri = "https://github.com/bilibiliDFYH"
 
 [node name="LinkButton2" type="LinkButton" parent="作者"]
+layout_mode = 0
 offset_left = 72.0
 offset_top = 51.0
 offset_right = 388.0
