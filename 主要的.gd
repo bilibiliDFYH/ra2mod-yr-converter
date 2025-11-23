@@ -44,9 +44,15 @@ func _ready () -> void :
 			"输出路径" :
 				配置data["输出路径"] = temp_string1_值
 			"复制的文件列表" :
-				配置data["复制的文件列表"] = temp_string1_值.split ( "," , false )
+				配置data["复制的文件列表"] = []
+				while true :
+					配置data["复制的文件列表"].append (temp_string1_值.substr (temp_string1_值.find ("<") + 1 , temp_string1_值.find(">") - temp_string1_值.find ("<") - 1 ) )
+					if temp_string1_值.find ("<") == -1 || temp_string1_值.find (">") == -1 :
+						break
+					temp_string1_值 = temp_string1_值.substr (temp_string1_值.find (">") + 1)
 			"一次处理量" :
 				配置data["一次处理量"] = int (temp_string1_值)
+				print(配置data["一次处理量"])
 			"是否自动退出" :
 				temp_string1_值 = 文本变为小写字母 (temp_string1_值)
 				if temp_string1_值 == "yes" || temp_string1_值 == "true" :
@@ -91,16 +97,21 @@ func 开始修改 () :
 				var file_name = dir.get_next()
 				while file_name != "":
 					if not dir.current_is_dir():
-						if 文件名.get_extension() == file_name.get_extension() && file_name.get_basename().substr (file_name.get_basename().length() - 2) != "md" :
+						if 文件名.get_extension() == file_name.get_extension() && file_name.get_basename().substr (file_name.get_basename().length() - 2) != "md" && file_name.get_basename().substr (file_name.get_basename().length() - 4 , 2) != "md" :
 							files.append(file_name)
 					file_name = dir.get_next()
 
 			for 旧文件名 in files :
 				var 新文件名 = 旧文件名.substr (0 , 旧文件名.find (".") ) + "md" + 旧文件名.substr (旧文件名.find (".") )
+				if 文件名 == "*.mix" && 旧文件名.substr (旧文件名.find (".") - 2 , 2).is_valid_int():
+					新文件名 = 旧文件名.substr (0 , 旧文件名.find (".") - 2 ) + "md" + 旧文件名.substr (旧文件名.find (".") - 2 )
 				if not DirAccess.dir_exists_absolute(配置data["输出路径"]):
 					DirAccess.make_dir_recursive_absolute(配置data["输出路径"])
 				if FileAccess.file_exists (配置data["mod路径"] + "\\" + 旧文件名) :
-					DirAccess.copy_absolute (配置data["mod路径"] + "\\" + 旧文件名 , 配置data["输出路径"] + "\\" + 新文件名)
+					if 新文件名.substr (0 , 6) != "Ecache" :
+						DirAccess.copy_absolute (配置data["mod路径"] + "\\" + 旧文件名 , 配置data["输出路径"] + "\\" + 新文件名)
+					else :
+						DirAccess.copy_absolute (配置data["mod路径"] + "\\" + 旧文件名 , 配置data["输出路径"] + "\\" + 旧文件名)
 		else :
 			var 新文件名 = 文件名.substr (0 , 文件名.find (".") ) + "md" + 文件名.substr (文件名.find (".") )
 			if 文件名.substr (文件名.find (".") ) == ".mix" : 新文件名 = 文件名.substr (0 , 文件名.find (".") - 2 ) + "md" + 文件名.substr (文件名.find (".") - 2 )

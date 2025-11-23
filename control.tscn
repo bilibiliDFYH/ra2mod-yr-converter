@@ -149,6 +149,89 @@ layout_mode = 0
 offset_right = 640.0
 offset_bottom = 480.0
 
+[node name="作者" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 170.0
+offset_top = -175.0
+offset_right = 624.0
+offset_bottom = -49.0
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 16
+text = "作者：东方银狐
+B站主页：
+永硕E盘：
+GitHub：
+项目仓库："
+
+[node name="LinkButton4" type="LinkButton" parent="作者"]
+offset_left = 80.0
+offset_top = 103.0
+offset_right = 454.0
+offset_bottom = 126.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 16
+text = "https://github.com/bilibiliDFYH/ra2mod-yr-converter"
+uri = "https://github.com/bilibiliDFYH/ra2mod-yr-converter"
+
+[node name="LinkButton3" type="LinkButton" parent="作者"]
+offset_left = 66.0
+offset_top = 77.0
+offset_right = 382.0
+offset_bottom = 100.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 16
+text = "https://github.com/bilibiliDFYH"
+uri = "https://github.com/bilibiliDFYH"
+
+[node name="LinkButton2" type="LinkButton" parent="作者"]
+offset_left = 72.0
+offset_top = 51.0
+offset_right = 388.0
+offset_bottom = 74.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 16
+text = "http://d-f-silverfox.ysepan.com"
+uri = "http://d-f-silverfox.ysepan.com"
+
+[node name="LinkButton" type="LinkButton" parent="作者"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 25.0
+offset_right = 389.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("2_qtu10")
+theme_override_font_sizes/font_size = 16
+text = "https://space.bilibili.com/3493089798785418"
+uri = "https://space.bilibili.com/3493089798785418"
+
 [node name="退出按钮" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 3
@@ -164,7 +247,7 @@ grow_horizontal = 0
 grow_vertical = 0
 texture = ExtResource("4_ee4bf")
 
-[node name="标题" type="Label" parent="退出按钮"]
+[node name="文本" type="Label" parent="退出按钮"]
 layout_mode = 0
 offset_right = 126.0
 offset_bottom = 25.0
