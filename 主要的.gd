@@ -113,7 +113,7 @@ func 开始修改 () :
 						DirAccess.copy_absolute (配置data["mod路径"] + "\\" + 旧文件名 , 配置data["输出路径"] + "\\" + 旧文件名)
 		else :
 			var 新文件名 = 文件名.substr (0 , 文件名.find (".") ) + "md" + 文件名.substr (文件名.find (".") )
-			if 文件名.substr (文件名.length - 4) == ".mix" && 文件名.substr (文件名.find (".") - 2 , 2).is_valid_int():
+			if 文件名.substr (文件名.length() - 4) == ".mix" && 文件名.substr (文件名.find (".") - 2 , 2).is_valid_int():
 				新文件名 = 文件名.substr (0 , 文件名.find (".") - 2 ) + "md" + 文件名.substr (文件名.find (".") - 2 )
 			if 文件名.substr (文件名.find (".") ) == ".mix" : 新文件名 = 文件名.substr (0 , 文件名.find (".") - 2 ) + "md" + 文件名.substr (文件名.find (".") - 2 )
 			if not DirAccess.dir_exists_absolute(配置data["输出路径"]):
